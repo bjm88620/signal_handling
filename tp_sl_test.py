@@ -40,6 +40,6 @@ signal_long = pd.Series(['',1,'','',1,1,1,1,'',1,1,'',1,'',1])
 signal_short = pd.Series(['',-1,'','',-1,-1,-1,-1,'',-1,-1,'',-1,'',-1])
 price = pd.Series([100,100,105,104,105,106,110,96,100,105,103,105,100,104,108])
 tp = 0.01
-sl = -0.05
+sl = -0.005
 print(slice_func(signal_long,price,1,tp,sl))
 print(slice_func(signal_short,price,-1,tp,sl))
