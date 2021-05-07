@@ -35,7 +35,7 @@ def slice_func(signal,price,identify,tp_rate,sl_rate):
 					sig_slice[i][j] = 0
 				else:
 					sig_slice[i][j] = ''
-	return sig_slice
+	return pd.Series(sum(sig_slice,[]))
 signal_long = pd.Series(['',1,'','',1,1,1,1,'',1,1,'',1,'',1])
 signal_short = pd.Series(['',-1,'','',-1,-1,-1,-1,'',-1,-1,'',-1,'',-1])
 price = pd.Series([100,100,105,104,105,106,110,96,100,105,103,105,100,104,108])
