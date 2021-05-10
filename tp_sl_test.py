@@ -2,7 +2,6 @@ import pandas as pd
 
 def slice_func(signal,price,identify,tp_rate,sl_rate):
 	"""
-
 	:param signal: panda series
 	:param price: panda series
 	:param identify: int, 1 or -1
@@ -13,14 +12,16 @@ def slice_func(signal,price,identify,tp_rate,sl_rate):
 	indices = [i for i, x in enumerate(sig_list) if x == identify and sig_list[i - 1] != identify]
 	sig_slice = [sig_list[indices[i]:indices[i + 1]] for i in range(len(indices) - 1)]
 	price_slice = [price_list[indices[i]:indices[i + 1]] for i in range(len(indices) - 1)]
+	if len(indices) == 0:
+		return print('No valid signal')
 	if indices[0] != 0:
 		sig_slice = [sig_list[0:indices[0]]] + sig_slice
 		price_slice = [price_list[0:indices[0]]] + price_slice
 	else:
 		pass
 	if indices[-1] != len(sig_list) - 1:
-		sig_slice += sig_list[indices[-1]:]
-		price_slice += price_list[indices[-1]:]
+		sig_slice += [sig_list[indices[-1]:]]
+		price_slice += [price_list[indices[-1]:]]
 	else:
 		sig_slice += [[sig_list[indices[-1]]]]
 		price_slice += [[price_list[indices[-1]]]]
@@ -36,10 +37,3 @@ def slice_func(signal,price,identify,tp_rate,sl_rate):
 				else:
 					sig_slice[i][j] = ''
 	return pd.Series(sum(sig_slice,[]))
-signal_long = pd.Series(['',1,'','',1,1,1,1,'',1,1,'',1,'',1])
-signal_short = pd.Series(['',-1,'','',-1,-1,-1,-1,'',-1,-1,'',-1,'',-1])
-price = pd.Series([100,100,105,104,105,106,110,96,100,105,103,105,100,104,108])
-tp = 0.01
-sl = -0.005
-print(slice_func(signal_long,price,1,tp,sl))
-print(slice_func(signal_short,price,-1,tp,sl))
